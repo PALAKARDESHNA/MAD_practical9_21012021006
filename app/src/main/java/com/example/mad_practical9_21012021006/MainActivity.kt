@@ -19,8 +19,6 @@ class MainActivity : AppCompatActivity() {
         heart.setBackgroundResource(R.drawable.heart_animation_list)
         heartanimation = heart.background as AnimationDrawable
     }
-
-
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus){

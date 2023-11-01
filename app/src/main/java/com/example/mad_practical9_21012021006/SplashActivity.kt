@@ -11,6 +11,7 @@ import android.widget.ImageView
 class SplashActivity : AppCompatActivity() {
     lateinit var logoanimation: AnimationDrawable
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)

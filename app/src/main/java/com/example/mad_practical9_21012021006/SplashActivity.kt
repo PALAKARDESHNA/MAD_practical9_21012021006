@@ -1,5 +1,6 @@
 package com.example.mad_practical9_21012021006
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -8,46 +9,48 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 
-class SplashActivity : AppCompatActivity() {
-    lateinit var logoanimation: AnimationDrawable
+@SuppressLint("CustomSplashScreen")
+class SplashActivity : AppCompatActivity(), Animation.AnimationListener {
+    lateinit var AnimationLogo: AnimationDrawable
+    lateinit var logoImage: ImageView
+    lateinit var logoAnimation: Animation
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        val logo: ImageView = findViewById(R.id.uvpce_logo)
+        logoImage = findViewById(R.id.uvpce)
+        logoImage.setBackgroundResource(R.drawable.uvpce_animation_list)
+        AnimationLogo = logoImage.background as AnimationDrawable
 
-        logo.setBackgroundResource(R.drawable.uvpce_animation_list)
-        logoanimation = logo.background as AnimationDrawable;
 
-        val myAnimation = AnimationUtils.loadAnimation(this, R.anim.twin_animation)
-        logo.startAnimation(myAnimation)
-
-        // Add an animation listener to your animation
-        myAnimation.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation) {
-                // Animation started
-            }
-
-            override fun onAnimationEnd(animation: Animation) {
-                // Animation ended, start a new activity here
-                val intent = Intent(this@SplashActivity, MainActivity::class.java)
-                startActivity(intent)
-            }
-
-            override fun onAnimationRepeat(animation: Animation) {
-                // Animation repeated
-            }
-        })
+        logoAnimation = AnimationUtils.loadAnimation(this, R.anim.twin_animation)
+        logoAnimation.setAnimationListener(this)
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
         if (hasFocus) {
-            logoanimation.start()
+            logoImage.startAnimation(logoAnimation)
+            AnimationLogo.start()
+
         } else {
-            logoanimation.stop()
+            AnimationLogo.stop()
         }
+        super.onWindowFocusChanged(hasFocus)
+    }
+
+    override fun onAnimationStart(p0: Animation?) {
+        //animationAnd maintent no use kari bija ma redirect karvanu che
+    }
+
+    override fun onAnimationEnd(p0: Animation?) {
+
+        val intent =  Intent(this@SplashActivity, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun onAnimationRepeat(p0: Animation?) {
+
     }
 }
